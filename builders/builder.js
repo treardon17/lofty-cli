@@ -187,7 +187,8 @@ class Builder {
     return new Promise((resolve) => {
       inquirer.prompt(this.prompts.page).then((answers) => {
         // Format the name of the module
-        const pageName = _.kebabCase(answers.name);
+        const pageName = _.upperFirst(_.camelCase(answers.name));
+        answers.pageName = pageName;
         // Create tasks array
         const tasks = new Listr([
           {
