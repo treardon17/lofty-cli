@@ -184,8 +184,11 @@ class Builder {
     return new Promise((resolve) => {
       inquirer.prompt(this.prompts.module).then((answers) => {
         // Format the name of the module
-        const moduleName = _.kebabCase(answers.name);
-        console.log(path.join(this.fileTree.root.src.modules, `/${moduleName}/`));
+        const moduleName = _.upperFirst(_.camelCase(answers.name));
+        answers.name = _.kebabCase(answers.name);
+        Logger.conditionalLog(path.join(this.fileTree.root.src.modules, `/${answers.name}/`));
+        answers.moduleName = moduleName;
+
         // Create tasks array
         const tasks = new Listr([
           {
